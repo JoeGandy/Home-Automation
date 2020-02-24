@@ -121,6 +121,11 @@ mqtt:
   discovery: true
   discovery_prefix: homeassistant
 
+namecheapdns:
+  host: home
+  domain: !secret main_domain
+  password: !seceret namecheap_dns_api_key 
+
 zone:
   - name: Home
     latitude: !secret home_lat
