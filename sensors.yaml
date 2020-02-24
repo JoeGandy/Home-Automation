@@ -1,0 +1,97 @@
+################ Date and time basic sensor 
+  - platform: time_date
+    display_options:
+      - 'time'
+      - 'date'
+      - 'date_time'
+      - 'date_time_utc'
+      - 'date_time_iso'
+      - 'time_date'
+      - 'time_utc'
+      - 'beat'
+
+################ Printer 
+  - platform: epsonworkforce
+    host: 192.168.1.110
+    monitored_conditions:
+      - black
+      - photoblack
+      - yellow
+      - magenta
+      - cyan
+      - clean
+
+
+################ Weather forcasting 
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    forecast:
+      - 0
+    hourly_forecast:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - precip_intensity
+      - precip_probability
+      - wind_bearing
+      - wind_speed
+    latitude: !secret home_lat
+    longitude: !secret home_lon
+
+################ Script to pull latest recordings off webcams 
+  - platform: command_line
+    command: find /config/www/recordings/front/*.mp4 -maxdepth 1 -mmin +1 -print0|xargs -0 ls -t | head -n 1 | sed 's/.*\///'
+    name: front_latest_recording
+    scan_interval: 20
+    command_timeout: 15
+  - platform: command_line
+    command: find /config/www/recordings/back/*.mp4 -maxdepth 1 -mmin +1 -print0|xargs -0 ls -t | head -n 1 | sed 's/.*\///'
+    name: back_latest_recording
+    scan_interval: 15
+    command_timeout: 10
+
+
+################ Bit of a hack to get direct url of random song from playlist 
+  - platform: command_line
+    scan_interval: 43200
+    command_timeout: 10
+    name: random_from_morning_playlist
+    command: !secret plex_random_morning_song
+
+################ Bluetooth sensors tied to presence.sh
+  - platform: mqtt
+    state_topic: 'myhome/presence_pi/EC:8C:9A:DF:12:D4'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Sophie Bluetooth Sensor'
+  - platform: mqtt
+    state_topic: 'myhome/presence_pi/BC:3D:85:1A:D1:51'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Joe Bluetooth Sensor'
+
+################ OLD SENSORS TO DETECT BUS TIMING ################
+
+#   - platform: rest
+#     resource: https://www.trentbarton.co.uk/RTILiveTimings.aspx?m=GetRtiFull&stop=4202
+#     value_template: '{{ value_json[0].result[0].dueIn }}'
+#     name: Time till next bus to work
+#   - platform: rest
+#     resource: https://www.trentbarton.co.uk/RTILiveTimings.aspx?m=GetRtiFull&stop=4207
+#     value_template: '{{ value_json[0].result[0].dueIn }}'
+#     name: Time till next bus to Derby

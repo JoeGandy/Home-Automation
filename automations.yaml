@@ -1,0 +1,281 @@
+- id: '1565780110931'
+  alias: '3D Print updates: 5% 25% 50% 75% 95% 100%'
+  trigger:
+  - above: '5'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  - above: '25'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  - above: '50'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  - above: '75'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  - above: '95'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  - above: '99'
+    entity_id: sensor.octoprint_job_percentage
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      data:
+        photo:
+          url: !secret octoprint_snapshot_url
+      message: Octpi snapshot
+    service: notify.notify_joe
+  - data:
+      message: '3D Print Update:
+
+
+        Current percentage: %{{ states(''sensor.octoprint_job_percentage'') }}
+
+        Time Left: {{ states(''sensor.octoprint_time_remaining'') | int / 60 }} minutes'
+    service: notify.notify_joe
+- id: '1567495202692'
+  alias: Camera [FRONT] Motion - Create File Only
+  trigger:
+  - payload: 'ON'
+    platform: mqtt
+    topic: myhome/study/motion
+  condition: []
+  action:
+  - data:
+      duration: 30
+      entity_id: camera.front_of_house
+      filename: /config/www/recordings/front/{{ now().strftime('%Y-%m-%d_%H:%M:%S')
+        }}.mp4
+      lookback: 10
+    entity_id: camera.front_of_house
+    service: camera.record
+- id: '1568731605064'
+  alias: ' Camera [BACK] Motion - Create File Only'
+  trigger:
+  - payload: 'ON'
+    platform: mqtt
+    topic: myhome/kitchen_camera/motion
+  condition: []
+  action:
+  - data:
+      duration: 30
+      entity_id: camera.back_of_house
+      filename: /config/www/recordings/back/{{ now().strftime('%Y-%m-%d_%H:%M:%S')
+        }}.mp4
+      lookback: 10
+    entity_id: camera.back_of_house
+    service: camera.record
+- id: '1568740170584'
+  alias: Camera [FRONT] Motion Recorded - Send Telegram
+  trigger:
+  - entity_id: sensor.front_latest_recording
+    platform: state
+  condition: []
+  action:
+  - data:
+      message: 'Motion detect on the back door camera in the last 3 minutes, see recording:'
+    service: notify.notify_joe_and_sophie
+  - data:
+      data:
+        video:
+          file: /config/www/recordings/front/{{ states('sensor.front_latest_recording')
+            }}
+      message: Latest recording
+    service: notify.notify_joe_and_sophie
+- id: '1568745035111'
+  alias: ' Camera [BACK] Motion Recorded - Send Telegram'
+  trigger:
+  - entity_id: sensor.back_latest_recording
+    platform: state
+  condition: []
+  action:
+  - data:
+      message: 'Motion detect on the front door camera in the last 3 minutes, see
+        recording:'
+    service: notify.notify_joe_and_sophie
+  - data:
+      data:
+        video:
+          file: /config/www/recordings/back/{{ states('sensor.back_latest_recording')
+            }}
+      message: Latest recording
+    service: notify.notify_joe_and_sophie
+- id: '1579624559410'
+  alias: Restart nightly
+  description: ''
+  trigger:
+  - hours: '01'
+    minutes: '00'
+    platform: time_pattern
+    seconds: '00'
+  condition: []
+  action:
+  - data: {}
+    entity_id: binary_sensor.workday_sensor
+    service: homeassistant.update_entity
+  - service: homeassistant.restart
+- id: '1579624559151'
+  alias: Detect When Joe is Home
+  trigger:
+  - above: '15'
+    entity_id: sensor.joe_bluetooth_sensor
+    platform: numeric_state
+  action:
+  - data:
+      entity_id: input_boolean.joe_occupancy
+    service: homeassistant.turn_on
+  hide_entity: true
+- id: '1579624559131'
+  alias: Detect When Sophie is Home
+  trigger:
+  - above: '15'
+    entity_id: sensor.sophie_bluetooth_sensor
+    platform: numeric_state
+  action:
+  - data:
+      entity_id: input_boolean.sophie_occupancy
+    service: homeassistant.turn_on
+  hide_entity: true
+- id: '1580133221559'
+  alias: Detect When Joe is Out
+  description: ''
+  trigger:
+  - below: '15'
+    entity_id: sensor.joe_bluetooth_sensor
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      entity_id: input_boolean.joe_occupancy
+    service: homeassistant.turn_off
+- id: '1580133274164'
+  alias: Detect When Sophie is Out
+  description: ''
+  trigger:
+  - below: '15'
+    entity_id: sensor.sophie_bluetooth_sensor
+    platform: numeric_state
+  condition: []
+  action:
+  - data:
+      entity_id: input_boolean.sophie_occupancy
+    service: homeassistant.turn_off
+- id: '1580146339289'
+  alias: Auto - Entering House (Joe/sophie)
+  description: ''
+  trigger:
+  - entity_id: input_boolean.joe_occupancy
+    for: 0:01:40
+    from: 'off'
+    platform: state
+    to: 'on'
+  - entity_id: input_boolean.sophie_occupancy
+    for: 0:01:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data_template:
+      cache: false
+      message: Welcome home {% if 'joe' in trigger.entity_id %} joe {% elif 'sophie'
+        in trigger.entity_id %} sophie {% endif %}
+    entity_id: media_player.living_room_speaker
+    service: tts.google_translate_say
+  - entity_id: light.dining_room
+    service: light.turn_on
+  - entity_id: light.study
+    service: light.turn_on
+  - entity_id: light.bedroom
+    service: light.turn_on
+- id: '1580160636988'
+  alias: Auto - Morning Routine
+  description: ''
+  trigger:
+  - hours: '06'
+    minutes: '40'
+    platform: time_pattern
+    seconds: '00'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - entity_id: script.1580219374911
+    service: script.turn_off
+  - entity_id: script.1580219374911
+    service: script.turn_on
+- id: '1580198255119'
+  alias: Auto - Leaving House (Joe/Sophie)
+  description: ''
+  trigger:
+  - entity_id: input_boolean.joe_occupancy
+    for: 0:01:00
+    platform: state
+    to: 'off'
+  - entity_id: input_boolean.sophie_occupancy
+    for: 0:01:00
+    platform: state
+    to: 'off'
+  condition:
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.joe_occupancy
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.sophie_occupancy
+      state: 'off'
+  action:
+  - entity_id: light.all
+    service: light.turn_off
+- id: '1580329115552'
+  alias: Turn off the lights when the sun rises
+  description: ''
+  trigger:
+  - event: sunrise
+    offset: +01:30:00
+    platform: sun
+  condition: []
+  action:
+  - device_id: 4c2b10de44f84d86b5dfa711f79db5e7
+    domain: light
+    entity_id: light.bedroom_light
+    type: turn_off
+  - device_id: 9c44f943d8824004b440598ff059bbbf
+    domain: light
+    entity_id: light.dining_room_2
+    type: turn_off
+  - device_id: e1b1407d50514b10a14f9a1e47ef6d4b
+    domain: light
+    entity_id: light.study_2
+    type: turn_off
+- id: '1581004676592'
+  alias: Auto - Morning Rain Notice
+  description: ''
+  trigger:
+  - hours: '07'
+    minutes: '00'
+    platform: time_pattern
+    seconds: '00'
+  condition:
+  - condition: state
+    entity_id: input_boolean.joe_occupancy
+    state: 'on'
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - data_template:
+      cache: false
+      message: Good morning Joe, there is {% if states('sensor.dark_sky_precip_probability_0h')
+        | float < 1 %} no chance  {% elif states('sensor.dark_sky_precip_probability_0h')
+        | float < 15 %} a slim chance  {% elif states('sensor.dark_sky_precip_probability_0h')
+        | float < 30 %} a small chance  {% elif states('sensor.dark_sky_precip_probability_0h')
+        | float < 75 %} a good chance  {% elif states('sensor.dark_sky_precip_probability_0h')
+        | float < 95 %} a very high chance  {% elif states('sensor.dark_sky_precip_probability_0h')
+        | float >= 95 %} guarantee  {% endif %} of it raining on your way to work
+    entity_id: media_player.living_room_speaker
+    service: tts.google_translate_say

@@ -1,0 +1,148 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+http:
+  base_url: !secret full_base_url
+
+homeassistant:
+  whitelist_external_dirs:
+    - /config/recordings
+    - /tmp
+    - /config/www/recordings/front
+    - /config/www/recordings/back
+
+# Text to speech
+tts:
+  - platform: google_translate
+    base_url: !secret full_base_url
+
+discovery:
+
+ios:
+
+api:
+
+octoprint:
+  host: !secret octoprint_ip
+  api_key: !secret octoprint_api_key
+  bed: true
+
+media_player:
+  - platform: androidtv
+    name: Living Room TV
+    device_class: androidtv
+    host: !secret living_room_tv_ip
+    apps:
+      com.plexapp.android: "plexapp"
+      com.amazon.tv.launcher: "firetv"
+    state_detection_rules:
+      'com.amazon.tv.launcher':
+        - 'standby'
+      'com.plexapp.android':
+        - 'paused':
+            'media_session_state': 3
+            'wake_lock_size': 1
+        - 'playing':
+            'media_session_state': 3
+        - 'standby'
+    turn_on_command: "input keyevent 3"
+    turn_off_command: "input keyevent 223"
+  - platform: plex
+  
+  
+plex:
+  host: !secret plex_ip
+  port: 32400
+  token: !secret plex_token
+  ssl: false
+  verify_ssl: false
+  media_player:
+    use_episode_art: true
+    show_all_controls: false
+
+frontend:
+  javascript_version: latest
+
+stream:
+
+camera:
+  - platform: mjpeg
+    name: OctoPrint
+    mjpeg_url: !secret octoprint_camera_url
+  - platform: ffmpeg
+    name: Front of House
+    input: !secret front_of_house_camera_url
+  - platform: ffmpeg
+    name: Back of House
+    input: !secret back_of_house_camera_url
+
+folder_watcher:
+  - folder: /config/www/recordings/front
+  - folder: /config/www/recordings/back
+
+binary_sensor:
+  - platform: workday
+    country: UK
+
+remote:
+  - platform: broadlink
+    host: !secret broadlink_mini_ip
+    mac: 'C8:F7:42:16:E5:19'
+    name: bedroom_broadlink
+
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api_key
+    allowed_chat_ids:
+      - 250415414
+      - -250415414
+      - 805671767
+
+notify:
+  - name: notify_joe
+    platform: telegram
+    chat_id: 805671767
+  - name: notify_joe_and_sophie
+    platform: telegram
+    chat_id: -250415414
+
+sonoff:
+  username: !secret sonoff_username
+  password: !secret sonoff_password
+  scan_interval: 60
+  grace_period: 600
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  tls_insecure: true
+  port: 1883
+  discovery: true
+  discovery_prefix: homeassistant
+
+zone:
+  - name: Home
+    latitude: !secret home_lat
+    longitude: !secret home_lon
+    radius: 600
+    icon: mdi:home
+    
+
+panel_iframe:
+  router:
+    title: 'Router'
+    url: !secret router_url
+  recordings:
+    title: 'Recordings'
+    url: !secret recordings_url
+  configure:
+    title: 'Configure'
+    url: !secret configure_url
+
+input_datetime: !include input_datetimes.yaml
+input_boolean: !include input_booleans.yaml
+sensor: !include sensors.yaml
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

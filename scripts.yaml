@@ -1,0 +1,122 @@
+morning_routine:
+  alias: Morning Routine
+  sequence:
+  - entity_id: input_boolean.night_mode
+    service: input_boolean.turn_off
+  - entity_id: input_boolean.day_mode
+    service: input_boolean.turn_on
+  - data:
+      entity_id: media_player.bedroom_speaker
+      message: Good morning sophie and joe
+    service: tts.google_translate_say
+  - delay: '3'
+  - data: {}
+    entity_id: media_player.googlehome5334
+    service: script.play_random_on_bedroom_from_morning
+  - data:
+      brightness_pct: 1
+    entity_id: light.all
+    service: light.turn_on
+  - data:
+      brightness_pct: 100
+      transition: 1000
+    entity_id: light.all
+    service: light.turn_on
+start_plex:
+  sequence:
+  - data:
+      entity_id: media_player.living_room_tv
+      source: com.plexapp.android
+    entity_id: media_player.living_room_tv
+    service: media_player.select_source
+stop_plex:
+  sequence:
+  - service: media_player.select_source
+    data:
+      entity_id: media_player.living_room_tv
+      source: '!com.plexapp.android'
+play_random_on_bedroom_from_morning:
+  sequence:
+  - data:
+      volume_level: 0.2
+    entity_id: media_player.bedroom_speaker
+    service: media_player.volume_set
+  - data: {}
+    entity_id: sensor.random_from_morning_playlist
+    service: homeassistant.update_entity
+  - data:
+      volume_level: 0.3
+    entity_id: media_player.bedroom_speaker
+    service: media_player.volume_set
+  - data_template:
+      entity_id: media_player.bedroom_speaker
+      media_content_id: '{{ states("sensor.random_from_morning_playlist") }}'
+      media_content_type: music
+    service: media_player.play_media
+turn_off_bedroom_tv:
+  alias: Turn off Bedroom tv
+  sequence:
+  - condition: template
+    value_template: '{{ states("media_player.bedroom_tv") != "Unavailable" }}'
+  - data:
+      command: power
+      device: television
+    entity_id: remote.broadlink
+    service: remote.send_command
+turn_on_bedroom_tv:
+  alias: Turn  on bedroom TV
+  sequence:
+  - condition: template
+    value_template: '{{ states("media_player.bedroom_tv") == "unavailable" }}'
+  - data:
+      command: power
+      device: television
+    entity_id: remote.broadlink
+    service: remote.send_command
+reset_volume_on_bedroom_tv:
+  alias: reset volume Bedroom TV
+  sequence:
+  - data:
+      command: volume_down
+      device: television
+      num_repeats: 30
+    entity_id: remote.broadlink
+    service: remote.send_command
+  - delay: '5'
+  - data:
+      command: volume_up
+      device: television
+      num_repeats: 7
+    entity_id: remote.broadlink
+    service: remote.send_command
+toggle_mute_bedroom_tv:
+  alias: Bedroom TV toggle mute
+  sequence:
+  - data:
+      command: mute
+      device: television
+    entity_id: remote.broadlink
+    service: remote.send_command
+bed_time:
+  alias: Activate Night Mode
+  sequence:
+  - entity_id: light.all
+    service: light.turn_off
+  - data:
+      brightness: 5
+    entity_id: light.dining_room
+    service: light.turn_on
+  - service: script.turn_off_bedroom_tv
+  - entity_id: input_boolean.day_mode
+    service: input_boolean.turn_off
+  - entity_id: input_boolean.night_mode
+    service: input_boolean.turn_on
+activate_day_mode:
+  alias: Activate Day Mode
+  sequence:
+  - entity_id: input_boolean.night_mode
+    service: input_boolean.turn_off
+  - entity_id: input_boolean.day_mode
+    service: input_boolean.turn_on
+  - entity_id: light.all
+    service: light.turn_on
