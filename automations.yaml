@@ -203,9 +203,9 @@
     entity_id: binary_sensor.workday_sensor
     state: 'on'
   action:
-  - entity_id: script.1580219374911
+  - entity_id: script.morning_routine
     service: script.turn_off
-  - entity_id: script.1580219374911
+  - entity_id: script.morning_routine
     service: script.turn_on
 - id: '1580198255119'
   alias: Auto - Leaving House (Joe/Sophie)
