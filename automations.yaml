@@ -7,13 +7,7 @@
   - above: '25'
     entity_id: sensor.octoprint_job_percentage
     platform: numeric_state
-  - above: '50'
-    entity_id: sensor.octoprint_job_percentage
-    platform: numeric_state
   - above: '75'
-    entity_id: sensor.octoprint_job_percentage
-    platform: numeric_state
-  - above: '95'
     entity_id: sensor.octoprint_job_percentage
     platform: numeric_state
   - above: '99'
@@ -195,8 +189,8 @@
   description: ''
   trigger:
   - platform: template
-    value_template: '{{ states(''sensor.time'') == states(''input_datetime.morning_alarm_time'')[0:5]
-      }}'
+    value_template: '{{ (states(''sensor.time'') | string) == (states(''input_datetime.morning_alarm_time'')[0:5]
+      | string) }}'
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
