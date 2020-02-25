@@ -124,7 +124,7 @@ mqtt:
 namecheapdns:
   host: home
   domain: !secret main_domain
-  password: !seceret namecheap_dns_api_key 
+  password: !secret namecheap_dns_api_key 
 
 zone:
   - name: Home

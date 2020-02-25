@@ -194,10 +194,9 @@
   alias: Auto - Morning Routine
   description: ''
   trigger:
-  - hours: '06'
-    minutes: '40'
-    platform: time_pattern
-    seconds: '00'
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == states(''input_datetime.morning_alarm_time'')[0:5]
+      }}'
   condition:
   - condition: state
     entity_id: binary_sensor.workday_sensor
