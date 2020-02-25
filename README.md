@@ -10,6 +10,7 @@ What I can do with autmation / What I plan to do
 - :heavy_check_mark: Make the house seem smart with lots of voice based notifications in all rooms (Google home minis everywhere)
 - :heavy_check_mark: Toggle day night mode easily
 - :heavy_check_mark: Use Home assistant time inputs to set morning alarms 
+- :x: When im sat at my pc and sophie gets home, tell me
 - :x: Smart lights in all rooms
 - :x: Integration with phsyical buttons
 - :x: Smart locks on main entry doors

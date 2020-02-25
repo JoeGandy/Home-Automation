@@ -85,6 +85,13 @@
     unit_of_measurement: '%'
     name: 'Joe Bluetooth Sensor'
 
+
+############## Steam sensor 
+  - platform: steam_online
+    api_key: !secret steam_api_key
+    accounts:
+      - !secret steam_joes_account_id
+
 ################ OLD SENSORS TO DETECT BUS TIMING ################
 
 #   - platform: rest
