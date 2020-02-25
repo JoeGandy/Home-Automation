@@ -69,7 +69,8 @@
   condition: []
   action:
   - data:
-      message: 'Motion detect on the back door camera in the last 3 minutes, see recording:'
+      message: 'Motion detected on the front door camera in the last 3 minutes, see
+        recording:'
     service: notify.notify_joe_and_sophie
   - data:
       data:
@@ -86,7 +87,7 @@
   condition: []
   action:
   - data:
-      message: 'Motion detect on the front door camera in the last 3 minutes, see
+      message: 'Motion detected on the back door camera in the last 3 minutes, see
         recording:'
     service: notify.notify_joe_and_sophie
   - data:
