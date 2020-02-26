@@ -18,7 +18,7 @@
   - data:
       data:
         photo:
-          url: !secret octoprint_snapshot_url
+          url: http://192.168.0.10:8080/?action=snapshot
       message: Octpi snapshot
     service: notify.notify_joe
   - data:
@@ -271,3 +271,14 @@
         | float >= 95 %} guarantee  {% endif %} of it raining on your way to work
     entity_id: media_player.living_room_speaker
     service: tts.google_translate_say
+- id: '1582742533028'
+  alias: Automatically Turn on Bedroom TV at 8:00pm
+  description: ''
+  trigger:
+  - hours: '20'
+    minutes: '00'
+    platform: time_pattern
+    seconds: '00'
+  condition: []
+  action:
+  - service: script.turn_on_bedroom_tv
