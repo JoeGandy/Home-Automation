@@ -16,3 +16,7 @@
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml
+
+
+!.storage/broadlink_remote_c8f74216e519_codes
+!.store/lovelace
