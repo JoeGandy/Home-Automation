@@ -10,6 +10,8 @@ morning_routine:
       message: Good morning sophie and joe
     service: tts.google_translate_say
   - delay: '3'
+  - timeout: '10'
+    wait_template: '{{states("media_player.bedroom_speaker") != "playing"}}'
   - data: {}
     entity_id: media_player.googlehome5334
     service: script.play_random_on_bedroom_from_morning
@@ -22,6 +24,14 @@ morning_routine:
       transition: 1000
     entity_id: light.all
     service: light.turn_on
+  - delay: '3'
+  - timeout: '420'
+    wait_template: '{{ states(''media_player.bedroom_speaker'') == ''idle'' }}'
+  - data_template:
+      entity_id: media_player.bedroom_speaker
+      media_content_id: '{{ states("sensor.endpoint_for_news") }}'
+      media_content_type: music
+    service: media_player.play_media
 start_plex:
   sequence:
   - data:
@@ -120,3 +130,11 @@ activate_day_mode:
     service: input_boolean.turn_on
   - entity_id: light.all
     service: light.turn_on
+'1582746799370':
+  alias: Play_news_on_bedroom_speaker
+  sequence:
+  - data_template:
+      entity_id: media_player.study_speaker
+      media_content_id: '{{ states("sensor.endpoint_for_news") }}'
+      media_content_type: music
+    service: media_player.play_media

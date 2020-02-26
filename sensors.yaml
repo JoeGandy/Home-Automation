@@ -92,8 +92,25 @@
     accounts:
       - !secret steam_joes_account_id
 
+############## Rest sensor for news 
+  - platform: rest
+    resource: !secret private_endpoint_for_news_tts1
+    name: News headlines 1
+    scan_interval: 21600 # Update every 6 hours
+  - platform: rest
+    resource: !secret private_endpoint_for_news_tts2
+    name: News headlines 2
+    scan_interval: 21600 # Update every 6 hours
+  - platform: rest
+    resource: !secret private_endpoint_for_news_tts3
+    name: News headlines 3
+    scan_interval: 21600 # Update every 6 hours
+  - platform: rest
+    resource: !secret private_endpoint_for_news_tts4
+    name: News headlines 4
+    scan_interval: 21600 # Update every 6 hours
+      
 ################ OLD SENSORS TO DETECT BUS TIMING ################
-
 #   - platform: rest
 #     resource: https://www.trentbarton.co.uk/RTILiveTimings.aspx?m=GetRtiFull&stop=4202
 #     value_template: '{{ value_json[0].result[0].dueIn }}'
