@@ -34,14 +34,13 @@
   trigger:
   - payload: 'ON'
     platform: mqtt
-    topic: myhome/study/motion
+    topic: myhome/frontdoor_camera/motion
   condition: []
   action:
   - data:
       duration: 30
       entity_id: camera.front_of_house
-      filename: /config/www/recordings/front/{{ now().strftime('%Y-%m-%d_%H:%M:%S')
-        }}.mp4
+      filename: /config/www/recordings/front/{{ as_timestamp(now()) }}.mp4
       lookback: 10
     entity_id: camera.front_of_house
     service: camera.record
@@ -50,14 +49,13 @@
   trigger:
   - payload: 'ON'
     platform: mqtt
-    topic: myhome/kitchen_camera/motion
+    topic: myhome/backdoor_camera/motion
   condition: []
   action:
   - data:
       duration: 30
       entity_id: camera.back_of_house
-      filename: /config/www/recordings/back/{{ now().strftime('%Y-%m-%d_%H:%M:%S')
-        }}.mp4
+      filename: /config/www/recordings/back/{{ as_timestamp(now()) }}.mp4
       lookback: 10
     entity_id: camera.back_of_house
     service: camera.record
