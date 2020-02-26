@@ -45,7 +45,7 @@
     entity_id: camera.front_of_house
     service: camera.record
 - id: '1568731605064'
-  alias: ' Camera [BACK] Motion - Create File Only'
+  alias: Camera [BACK] Motion - Create File Only
   trigger:
   - payload: 'ON'
     platform: mqtt
@@ -78,7 +78,7 @@
       message: Latest recording
     service: notify.notify_joe_and_sophie
 - id: '1568745035111'
-  alias: ' Camera [BACK] Motion Recorded - Send Telegram'
+  alias: Camera [BACK] Motion Recorded - Send Telegram
   trigger:
   - entity_id: sensor.back_latest_recording
     platform: state
