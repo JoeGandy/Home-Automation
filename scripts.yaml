@@ -57,7 +57,7 @@ turn_off_bedroom_tv:
   alias: Turn off Bedroom tv
   sequence:
   - condition: template
-    value_template: '{{ states("media_player.bedroom_tv") != "Unavailable" }}'
+    value_template: '{{ states("media_player.bedroom_tv") != "unavailable" }}'
   - data:
       command: power
       device: television
