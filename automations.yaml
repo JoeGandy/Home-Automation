@@ -172,7 +172,7 @@
   condition: []
   action:
   - data_template:
-      cache: false
+      cache: true
       message: Welcome home {% if 'joe' in trigger.entity_id %} joe {% elif 'sophie'
         in trigger.entity_id %} sophie {% endif %}
     entity_id: media_player.living_room_speaker
@@ -183,6 +183,16 @@
     service: light.turn_on
   - entity_id: light.bedroom
     service: light.turn_on
+  - condition: state
+    entity_id: sensor.steam_76561198038995888
+    state: online
+  - data_template:
+      cache: true
+      message: Hey {% if 'joe' in trigger.entity_id %}Sophie{% elif 'sophie' in trigger.entity_id
+        %}Joe{% endif %}, {% if 'joe' in trigger.entity_id %}  Joe {% elif 'sophie'
+        in trigger.entity_id %} Sophie {% endif %} has arrived home
+    entity_id: media_player.study_speaker
+    service: tts.google_translate_say
 - id: '1580160636988'
   alias: Auto - Morning Routine
   description: ''

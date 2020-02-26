@@ -26,12 +26,8 @@ morning_routine:
     service: light.turn_on
   - delay: '3'
   - timeout: '420'
-    wait_template: '{{ states(''media_player.bedroom_speaker'') == ''idle'' }}'
-  - data_template:
-      entity_id: media_player.bedroom_speaker
-      media_content_id: '{{ states("sensor.endpoint_for_news") }}'
-      media_content_type: music
-    service: media_player.play_media
+    wait_template: '{{states("media_player.bedroom_speaker") != "playing"}}'
+  - service: script.1582746799370
 start_plex:
   sequence:
   - data:
@@ -134,7 +130,10 @@ activate_day_mode:
   alias: Play_news_on_bedroom_speaker
   sequence:
   - data_template:
-      entity_id: media_player.study_speaker
-      media_content_id: '{{ states("sensor.endpoint_for_news") }}'
-      media_content_type: music
-    service: media_player.play_media
+      entity_id: media_player.bedroom_speaker
+      message: '{{ states("sensor.news_headlines_1") }} {{ states("sensor.news_headlines_2")
+        }} {{ states("sensor.news_headlines_3") }} {{ states("sensor.news_headlines_4")
+        }}
+
+        '
+    service: tts.google_translate_say
