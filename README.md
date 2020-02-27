@@ -17,6 +17,7 @@ What I can do with autmation / What I plan to do
 - :x: Smart locks on main entry doors
 - :x: Alarms on all doors windows through zigbee2mqtt and cheap xaomi devices
 - :x: Use smart plugs to monitor power consumption of devices to detect faults/status (i.e. on fridge we could detect abnormal energy usage)
+- :x: Use smart plugs to monitor power consumption of devices to detect states on none smart devices (i.e. we could use it to see whenthe dishwasher is using abornal amount of power, we'd know it was running)
 - :x: Physical light switches for all rooms
 - :x: RGB Lamp to show what bin should be out next
 - :x: Bathroom automatic shower music
