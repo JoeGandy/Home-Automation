@@ -10,12 +10,12 @@ What I can do with autmation / What I plan to do
 - :heavy_check_mark: Make the house seem smart with lots of voice based notifications in all rooms (Google home minis everywhere)
 - :heavy_check_mark: Toggle day night mode easily
 - :heavy_check_mark: Use Home assistant time inputs to set morning alarms 
-- :x: When im sat at my pc and sophie gets home, tell me
+- :heavy_check_mark: When im sat at my pc and sophie gets home, tell me
+- :heavy_check_mark: Add news to the morning routine speakers
 - :x: Smart lights in all rooms
 - :x: Integration with phsyical buttons
 - :x: Smart locks on main entry doors
 - :x: Alarms on all doors windows through zigbee2mqtt and cheap xaomi devices
-- :x: Add news to the morning routine speakers
 - :x: Use smart plugs to monitor power consumption of devices to detect faults/status (i.e. on fridge we could detect abnormal energy usage)
 - :x: Physical light switches for all rooms
 - :x: RGB Lamp to show what bin should be out next
