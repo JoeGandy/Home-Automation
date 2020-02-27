@@ -152,7 +152,7 @@
                             "type": "markdown"
                         }
                     ],
-                    "icon": "",
+                    "icon": "mdi:home",
                     "path": "home",
                     "title": "Home"
                 },
@@ -194,6 +194,7 @@
                             "type": "markdown"
                         }
                     ],
+                    "icon": "mdi:cctv",
                     "panel": false,
                     "path": "home-monitoring",
                     "theme": "default",
@@ -283,79 +284,9 @@
                             "type": "history-graph"
                         }
                     ],
+                    "icon": "mdi:printer-3d-nozzle",
                     "path": "3d-printing",
                     "title": "3D Printing"
-                },
-                {
-                    "badges": [],
-                    "cards": [
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.joe_bluetooth_sensor"
-                                },
-                                {
-                                    "entity": "sensor.sophie_bluetooth_sensor"
-                                }
-                            ],
-                            "hours_to_show": 12,
-                            "refresh_interval": 0,
-                            "type": "history-graph"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.joe_bluetooth_sensor"
-                                },
-                                {
-                                    "entity": "sensor.sophie_bluetooth_sensor"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.ink_level_black"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_cyan"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_magenta"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_yellow"
-                                }
-                            ],
-                            "show_header_toggle": false,
-                            "title": "Printer Ink",
-                            "type": "entities"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "sensor.ink_level_black"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_cyan"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_magenta"
-                                },
-                                {
-                                    "entity": "sensor.ink_level_yellow"
-                                }
-                            ],
-                            "hours_to_show": 2000,
-                            "refresh_interval": 0,
-                            "title": "Printer Ink",
-                            "type": "history-graph"
-                        }
-                    ],
-                    "path": "debug",
-                    "title": "DEBUG"
                 },
                 {
                     "badges": [],
@@ -459,8 +390,80 @@
                             "type": "media-control"
                         }
                     ],
+                    "icon": "mdi:television-classic",
                     "path": "config",
                     "title": "Entertainment"
+                },
+                {
+                    "badges": [],
+                    "cards": [
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.joe_bluetooth_sensor"
+                                },
+                                {
+                                    "entity": "sensor.sophie_bluetooth_sensor"
+                                }
+                            ],
+                            "hours_to_show": 12,
+                            "refresh_interval": 0,
+                            "type": "history-graph"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.joe_bluetooth_sensor"
+                                },
+                                {
+                                    "entity": "sensor.sophie_bluetooth_sensor"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.ink_level_black"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_cyan"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_magenta"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_yellow"
+                                }
+                            ],
+                            "show_header_toggle": false,
+                            "title": "Printer Ink",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "sensor.ink_level_black"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_cyan"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_magenta"
+                                },
+                                {
+                                    "entity": "sensor.ink_level_yellow"
+                                }
+                            ],
+                            "hours_to_show": 2000,
+                            "refresh_interval": 0,
+                            "title": "Printer Ink",
+                            "type": "history-graph"
+                        }
+                    ],
+                    "path": "debug",
+                    "title": "DEBUG"
                 }
             ]
         }
