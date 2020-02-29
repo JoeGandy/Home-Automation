@@ -24,34 +24,21 @@
                             "type": "horizontal-stack"
                         },
                         {
-                            "entities": [
+                            "cards": [
                                 {
-                                    "entity": "input_boolean.joe_occupancy"
+                                    "entity": "light.dimmable_light_1",
+                                    "type": "light"
                                 },
                                 {
-                                    "entity": "binary_sensor.workday_sensor"
+                                    "entity": "light.dimmable_light_1_2",
+                                    "type": "light"
                                 },
                                 {
-                                    "entity": "input_boolean.sophie_occupancy"
+                                    "entity": "light.all",
+                                    "type": "light"
                                 }
                             ],
-                            "show_icon": true,
-                            "show_name": true,
-                            "show_state": true,
-                            "type": "glance"
-                        },
-                        {
-                            "entities": [
-                                {
-                                    "entity": "input_boolean.joe_occupancy"
-                                },
-                                {
-                                    "entity": "input_boolean.sophie_occupancy"
-                                }
-                            ],
-                            "hours_to_show": 24,
-                            "refresh_interval": 0,
-                            "type": "history-graph"
+                            "type": "horizontal-stack"
                         },
                         {
                             "cards": [
@@ -91,39 +78,32 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.dark_sky_summary"
+                                    "entity": "input_boolean.joe_occupancy"
                                 },
                                 {
-                                    "entity": "sensor.dark_sky_temperature"
+                                    "entity": "binary_sensor.workday_sensor"
                                 },
                                 {
-                                    "entity": "sensor.dark_sky_summary_0d"
+                                    "entity": "input_boolean.sophie_occupancy"
                                 }
                             ],
+                            "show_icon": true,
+                            "show_name": true,
+                            "show_state": true,
                             "type": "glance"
-                        },
-                        {
-                            "content": " ### Things to add\n- When motion detected on camera, pause any media then show camera feed on that device\n- WIP - Buttons for light switches\n- WIP - Buttons to toggle day/night mode from bed\n- Button to auto play music in shower\n- RGB LED lamp to show various info downstairs\n- RF Doorbell trigger home assistant (through broadlink) phone notification\n- Camera into front door through peephole\n- Use Smart plugs to monitor power of dishwasher/washing machine to see when they're done",
-                            "type": "markdown"
                         },
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.dark_sky_precip_probability_0h"
+                                    "entity": "input_boolean.joe_occupancy"
                                 },
                                 {
-                                    "entity": "sensor.dark_sky_precip_probability_1h"
-                                },
-                                {
-                                    "entity": "sensor.dark_sky_precip_probability_2h"
-                                },
-                                {
-                                    "entity": "sensor.dark_sky_precip_probability_3h"
+                                    "entity": "input_boolean.sophie_occupancy"
                                 }
                             ],
-                            "show_name": false,
-                            "title": "Precipitation chance (hours)",
-                            "type": "glance"
+                            "hours_to_show": 24,
+                            "refresh_interval": 0,
+                            "type": "history-graph"
                         },
                         {
                             "entities": [
@@ -171,7 +151,7 @@
                             "type": "picture-entity"
                         },
                         {
-                            "content": " [Go to full control](https://192.168.1.151/)",
+                            "content": "Last motion back camera: {{ relative_time(states.sensor.back_latest_recording.last_updated) }} \n\n[Go to full control](https://192.168.1.151/)\n\n[View Previous Recordings](/recordings).",
                             "type": "markdown"
                         },
                         {
@@ -186,11 +166,7 @@
                             "type": "picture-entity"
                         },
                         {
-                            "content": " [Go to full control](https://192.168.1.113/)",
-                            "type": "markdown"
-                        },
-                        {
-                            "content": "[View Previous Recordings](/recordings).",
+                            "content": "Last motion front camera: {{ relative_time(states.sensor.front_latest_recording.last_updated) }}\n \n[Go to full control](https://192.168.1.113/)\n\n[View Previous Recordings](/recordings).",
                             "type": "markdown"
                         }
                     ],
