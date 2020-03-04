@@ -137,3 +137,7 @@ activate_day_mode:
 
         '
     service: tts.google_translate_say
+'1583238644559':
+  alias: Restart Home Assistant
+  sequence:
+  - service: homeassistant.restart
