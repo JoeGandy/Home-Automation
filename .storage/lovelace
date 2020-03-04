@@ -7,38 +7,27 @@
                     "badges": [],
                     "cards": [
                         {
-                            "cards": [
+                            "entities": [
                                 {
-                                    "entity": "light.bedroom_light",
-                                    "type": "light"
+                                    "entity": "light.all"
                                 },
                                 {
-                                    "entity": "light.dining_room",
-                                    "type": "light"
+                                    "entity": "light.bedroom"
                                 },
                                 {
-                                    "entity": "light.study",
-                                    "type": "light"
+                                    "entity": "light.dimmable_light_1"
+                                },
+                                {
+                                    "entity": "light.dimmable_light_1_2"
+                                },
+                                {
+                                    "entity": "light.dining_room"
+                                },
+                                {
+                                    "entity": "light.study"
                                 }
                             ],
-                            "type": "horizontal-stack"
-                        },
-                        {
-                            "cards": [
-                                {
-                                    "entity": "light.dimmable_light_1",
-                                    "type": "light"
-                                },
-                                {
-                                    "entity": "light.dimmable_light_1_2",
-                                    "type": "light"
-                                },
-                                {
-                                    "entity": "light.all",
-                                    "type": "light"
-                                }
-                            ],
-                            "type": "horizontal-stack"
+                            "type": "entities"
                         },
                         {
                             "cards": [
@@ -127,8 +116,18 @@
                             "type": "entities"
                         },
                         {
-                            "content": "[Github](https://github.com/JoeGandy/Home-Automation)",
+                            "content": "[Github](https://github.com/JoeGandy/Home-Automation)\n[Spreadsheet to buy stuff](https://docs.google.com/spreadsheets/d/1B4T9A_SWytbho-Hw8GSIeQdBqvXrW7-OFuTCENsEZX4/edit?ouid=101464187454639081969&usp=sheets_home&ths=true)",
                             "title": "Links",
+                            "type": "markdown"
+                        },
+                        {
+                            "content": "\n{% set n = now() %}\n{% set start_date = as_timestamp(state_attr('calendar.formula_1', 'start_time')) %}\n{% set end_date = as_timestamp(state_attr('calendar.formula_1', 'end_time')) %}\n{% set day_of_month = (start_date | timestamp_custom('%d') | string)[-1] %}\n{% if day_of_month == '1' %}\n  {% set month_tense = 'th' %}\n{% elif day_of_month == '2' %}\n  {% set month_tense = 'nd' %}\n{% elif day_of_month == '3' %}\n  {% set month_tense = 'rd' %}\n{% else %}\n  {% set month_tense = 'th' %}\n{% endif %}\n{% if n.month >= 2 %}\n---\n### {{ state_attr('calendar.formula_1', 'message') }}\n{{ start_date | timestamp_custom('%d') }}{{ month_tense }} {{ start_date | timestamp_custom('%B %H:%M%p') }} -> {{ end_date | timestamp_custom('%H:%M%p') }}\n{% endif %}\n",
+                            "title": "Next F1 Race",
+                            "type": "markdown"
+                        },
+                        {
+                            "content": "---\n{% if state_attr('calendar.Bins', 'message') == 'Red' %}\n  <h1><font style='background-color:red' color='red' >Red</font><h1>\n{% elif state_attr('calendar.Bins', 'message') == 'Green' %}\n  <h1><font style='background-color:red' color='green' >Green</font><h1>\n{% elif state_attr('calendar.Bins', 'message') == 'Green/Red' %}\n  <h1><font style='background-color:red' color='green' >Green</font> / <font style='background-color:red' color='red' >Red</font><h1>\n{% elif state_attr('calendar.Bins', 'message') == 'Black' %}\n  <h1>Black<h1>\n{% endif %}\n",
+                            "title": "Next Bin Day",
                             "type": "markdown"
                         }
                     ],
@@ -389,57 +388,88 @@
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.joe_bluetooth_sensor"
+                                    "entity": "automation.back_motion_create_file_only"
                                 },
                                 {
-                                    "entity": "sensor.sophie_bluetooth_sensor"
+                                    "entity": "automation.back_motion_recorded_send_telegram"
+                                },
+                                {
+                                    "entity": "automation.front_motion_create_file_only"
+                                },
+                                {
+                                    "entity": "automation.front_motion_recorded_send_telegram"
                                 }
                             ],
                             "show_header_toggle": false,
+                            "title": "CCTV Automations",
                             "type": "entities"
                         },
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.ink_level_black"
+                                    "entity": "automation.auto_entering_house_joe_sophie",
+                                    "icon": "mdi:location-enter"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_cyan"
+                                    "entity": "automation.detect_when_joe_is_home",
+                                    "icon": "mdi:location-enter"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_magenta"
+                                    "entity": "automation.detect_when_sophie_is_home",
+                                    "icon": "mdi:location-enter"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_yellow"
+                                    "entity": "automation.auto_leaving_house_joe_sophie",
+                                    "icon": "mdi:location-exit"
+                                },
+                                {
+                                    "entity": "automation.detect_when_joe_is_out",
+                                    "icon": "mdi:location-exit"
+                                },
+                                {
+                                    "entity": "automation.detect_when_sophie_is_out",
+                                    "icon": "mdi:location-exit"
                                 }
                             ],
-                            "show_header_toggle": false,
-                            "title": "Printer Ink",
+                            "title": "Enter Exit Automations",
                             "type": "entities"
                         },
                         {
                             "entities": [
                                 {
-                                    "entity": "sensor.ink_level_black"
+                                    "entity": "automation.auto_morning_rain_notice"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_cyan"
+                                    "entity": "automation.auto_morning_routine"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_magenta"
+                                    "entity": "automation.restart_nightly"
                                 },
                                 {
-                                    "entity": "sensor.ink_level_yellow"
+                                    "entity": "script.morning_routine"
+                                },
+                                {
+                                    "entity": "script.bed_time"
+                                },
+                                {
+                                    "entity": "script.activate_day_mode"
                                 }
                             ],
-                            "hours_to_show": 2000,
-                            "refresh_interval": 0,
-                            "title": "Printer Ink",
-                            "type": "history-graph"
+                            "title": "Routines",
+                            "type": "entities"
+                        },
+                        {
+                            "entities": [
+                                {
+                                    "entity": "script.1583238644559",
+                                    "icon": "mdi:restart"
+                                }
+                            ],
+                            "type": "entities"
                         }
                     ],
                     "path": "debug",
-                    "title": "DEBUG"
+                    "title": "Config"
                 }
             ]
         }

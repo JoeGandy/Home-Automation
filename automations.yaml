@@ -233,27 +233,6 @@
   action:
   - entity_id: light.all
     service: light.turn_off
-- id: '1580329115552'
-  alias: Turn off the lights when the sun rises
-  description: ''
-  trigger:
-  - event: sunrise
-    offset: +01:30:00
-    platform: sun
-  condition: []
-  action:
-  - device_id: 4c2b10de44f84d86b5dfa711f79db5e7
-    domain: light
-    entity_id: light.bedroom_light
-    type: turn_off
-  - device_id: 9c44f943d8824004b440598ff059bbbf
-    domain: light
-    entity_id: light.dining_room_2
-    type: turn_off
-  - device_id: e1b1407d50514b10a14f9a1e47ef6d4b
-    domain: light
-    entity_id: light.study_2
-    type: turn_off
 - id: '1581004676592'
   alias: Auto - Morning Rain Notice
   description: ''
