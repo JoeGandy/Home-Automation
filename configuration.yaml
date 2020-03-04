@@ -49,6 +49,9 @@ media_player:
     turn_off_command: "input keyevent 223"
   - platform: plex
   
+google:
+  client_id: !secret google_client_id_cal
+  client_secret: !secret google_secret_cal
   
 plex:
   host: !secret plex_ip

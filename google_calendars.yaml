@@ -1,0 +1,42 @@
+
+- cal_id: 0vlc7t0255vvptlnkirj4agmr0@group.calendar.google.com
+  entities:
+  - device_id: formula_1
+    ignore_availability: true
+    name: Formula 1
+    track: true
+
+- cal_id: joe@gandy.ws
+  entities:
+  - device_id: joe_gandy_ws
+    ignore_availability: true
+    name: joe@gandy.ws
+    track: true
+
+- cal_id: gandy.ws_he1qvdti09crsh6grp02h5ncks@group.calendar.google.com
+  entities:
+  - device_id: birthdays
+    ignore_availability: true
+    name: Birthdays
+    track: false
+
+- cal_id: gandy.ws_d9bdribe40mr45v1sqij9uqmbo@group.calendar.google.com
+  entities:
+  - device_id: birthdays
+    ignore_availability: true
+    name: Birthdays
+    track: false
+
+- cal_id: en.uk#holiday@group.v.calendar.google.com
+  entities:
+  - device_id: holidays_in_united_kingdom
+    ignore_availability: true
+    name: Holidays in United Kingdom
+    track: false
+
+- cal_id: gandy.ws_hq4epc16d5e71ivrl5evj64rqs@group.calendar.google.com
+  entities:
+  - device_id: bins
+    ignore_availability: true
+    name: Bins
+    track: true
