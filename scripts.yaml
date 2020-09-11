@@ -10,20 +10,28 @@ morning_routine:
       message: Good morning sophie and joe
     service: tts.google_translate_say
   - delay: '3'
+  - data:
+      brightness: 1
+    entity_id: light.bedroom_light
+    service: light.turn_on
+  - data:
+      brightness: 150
+      transition: 1000
+    entity_id: light.bedroom_light
+    service: light.turn_on
+  - data:
+      brightness_pct: 100
+      transition: 1000
+    entity_id: light.hallway_light
+    service: light.turn_on
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
   - timeout: '10'
     wait_template: '{{states("media_player.bedroom_speaker") != "playing"}}'
   - data: {}
     entity_id: media_player.googlehome5334
     service: script.play_random_on_bedroom_from_morning
-  - data:
-      brightness_pct: 1
-    entity_id: light.all
-    service: light.turn_on
-  - data:
-      brightness_pct: 100
-      transition: 1000
-    entity_id: light.all
-    service: light.turn_on
   - delay: '3'
   - timeout: '420'
     wait_template: '{{states("media_player.bedroom_speaker") != "playing"}}'
@@ -106,11 +114,11 @@ toggle_mute_bedroom_tv:
 bed_time:
   alias: Activate Night Mode
   sequence:
-  - entity_id: light.all
+  - entity_id: light.all_lights
     service: light.turn_off
   - data:
-      brightness: 5
-    entity_id: light.dining_room
+      brightness: 100
+    entity_id: light.dining_room_light
     service: light.turn_on
   - service: script.turn_off_bedroom_tv
   - entity_id: input_boolean.day_mode
@@ -124,7 +132,7 @@ activate_day_mode:
     service: input_boolean.turn_off
   - entity_id: input_boolean.day_mode
     service: input_boolean.turn_on
-  - entity_id: light.all
+  - entity_id: light.all_lights
     service: light.turn_on
 '1582746799370':
   alias: Play_news_on_bedroom_speaker

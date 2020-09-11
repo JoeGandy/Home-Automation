@@ -1,0 +1,52 @@
+# All lights
+  - platform: group
+    name: All Lights
+    entities:
+      - light.study_light
+      - light.bedroom_light
+      - light.living_room_light
+      - light.dining_room_light
+      - light.hallway_light
+
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/study_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/study_light/set"
+    name: "Study Light"
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/hallway_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/hallway_light/set"
+    name: "Hallway Light"
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/dining_room_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/dining_room_light/set"
+    name: "Dining Room Light"
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/bedroom_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/bedroom_light/set"
+    name: "Bedroom Light"
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/living_room_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/living_room_light/set"
+    name: "Living Room Light"
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/bathroom_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    brightness: true
+    schema: "json"
+    command_topic: "zigbee2mqtt/bathroom_light/set"
+    name: "Bathroom Light"

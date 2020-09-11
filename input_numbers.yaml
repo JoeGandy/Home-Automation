@@ -1,0 +1,5 @@
+  need_for_lights:
+    name: Need for lights
+    min: 0
+    max: 100
+    step: 1

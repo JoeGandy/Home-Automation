@@ -1,3 +1,42 @@
+################ Lights
+## Study
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/study_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    icon: "mdi:signal"
+    unit_of_measurement: "lqi"
+    value_template: "{{ value_json.linkquality }}"
+## Hallway (above stairs)
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/hallway_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    icon: "mdi:signal"
+    unit_of_measurement: "lqi"
+    value_template: "{{ value_json.linkquality }}"
+## Dining Room (above stairs)
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/dining_room_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    icon: "mdi:signal"
+    unit_of_measurement: "lqi"
+    value_template: "{{ value_json.linkquality }}"
+## Bedroom
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/bedroom_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    icon: "mdi:signal"
+    unit_of_measurement: "lqi"
+    value_template: "{{ value_json.linkquality }}"
+## Living Room
+  - platform: "mqtt"
+    state_topic: "zigbee2mqtt/living_room_light"
+    availability_topic: "zigbee2mqtt/bridge/state"
+    icon: "mdi:signal"
+    unit_of_measurement: "lqi"
+    value_template: "{{ value_json.linkquality }}"
+
+
+
 ################ Date and time basic sensor 
   - platform: time_date
     display_options:
