@@ -123,6 +123,17 @@
     value_template: '{{ value_json.confidence }}'
     unit_of_measurement: '%'
     name: 'Joe Bluetooth Sensor'
+  - platform: mqtt
+    state_topic: 'myhome/presence_pi_downstairs/EC:8C:9A:DF:12:D4'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Sophie Bluetooth Sensor Downstairs'
+  - platform: mqtt
+    state_topic: 'myhome/presence_pi_downstairs/BC:3D:85:1A:D1:51'
+    value_template: '{{ value_json.confidence }}'
+    unit_of_measurement: '%'
+    name: 'Joe Bluetooth Sensor Downstairs'
+
 
 
 ############## Steam sensor 
