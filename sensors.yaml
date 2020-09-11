@@ -71,24 +71,11 @@
       - 1
       - 2
       - 3
-      - 4
-      - 5
-      - 6
-      - 7
-      - 8
-      - 9
-      - 10
-      - 11
-      - 12
-      - 13
     monitored_conditions:
-      - summary
       - icon
       - temperature
       - precip_intensity
       - precip_probability
-      - wind_bearing
-      - wind_speed
     latitude: !secret home_lat
     longitude: !secret home_lon
 
@@ -141,6 +128,10 @@
     api_key: !secret steam_api_key
     accounts:
       - !secret steam_joes_account_id
+      - !secret steam_bens_account_id
+      - !secret steam_alexs_account_id
+      - !secret steam_freds_account_id
+      - !secret steam_mikes_account_id
 
 ############## Rest sensor for news 
   - platform: rest
@@ -159,7 +150,43 @@
     resource: !secret private_endpoint_for_news_tts4
     name: News headlines 4
     scan_interval: 21600 # Update every 6 hours
-      
+
+
+############## Persistant Notification for steam status
+    #Joes Phone
+  - platform: rest
+    scan_interval: 300
+    name: Steam status notifications endpoint
+    resource_template: https://autoremotejoaomgcd.appspot.com/sendnotification?key=dahtfMFTz_A:APA91bGPuZUuMXEqsJa9Yg4e91LXHu7FWGYlVG8z_ke0UF15hDKhcmZ2JdyD9n3m4dTGQFxOYzNYow3GsUDsUAwWFVtmxrUWLm7SixktwyWR-PpMiQjwVUUkhj8EymeiVG4kz5dhum86&title=Online status&text=Alex {% if is_state('sensor.steam_76561198064843626', 'online') %}✔️{% elif is_state('sensor.steam_76561198064843626', 'away') %}💤{% elif is_state('sensor.steam_76561198064843626', 'offline') %}❌{% endif %} Ben {% if is_state('sensor.steam_76561198042006295', 'online') %}✔️{% elif is_state('sensor.steam_76561198042006295', 'away') %}💤{% elif is_state('sensor.steam_76561198042006295', 'offline') %}❌{% endif %} Mike {% if is_state('sensor.steam_76561198146483595', 'online') %}✔️{% elif is_state('sensor.steam_76561198146483595', 'away') %}💤{% elif is_state('sensor.steam_76561198146483595', 'offline') %}❌{% endif %} Fred {% if is_state('sensor.steam_76561198008848460', 'online') %}✔️{% elif is_state('sensor.steam_76561198008848460', 'away') %}💤{% elif is_state('sensor.steam_76561198008848460', 'offline') %}❌{% endif %}&id=1&icon=https://lh3.googleusercontent.com/proxy/vanmUA0xIVp6eCmxAw8i5Y1TSByTssRsFVxoNfOohrJuVvWTWfJwDMjgDmgbDjjgutIiz2jCs5xkAu2B7z1d3tKlITwsX2NULBOrmBuqp9IGLqCofhw4EiZ914b2R2_RurxcmF4enw&persistent=1&dismissontouch=1&subtext={{ now().strftime('%A %H:%M') }}
+    #Bens Phone
+  - platform: rest
+    scan_interval: 300
+    name: Steam status notifications endpoint
+    resource_template: https://autoremotejoaomgcd.appspot.com/sendnotification?key=fVttUXvQAhw:APA91bGmvmvn3KWzvQV-vIy6OarhINR_Mq6ypfhkXGQ3WOnzr4lUM9PrAXe8vEiQgaVjtfD72vggjHRYy1g42kMNaMeSwvaSKOQHLhTZhXp4EQEFcwkNS73eQmmNHAz-W3OSapWyiGoP&title=Online status&text=Alex {% if is_state('sensor.steam_76561198064843626', 'online') %}✓{% elif is_state('sensor.steam_76561198064843626', 'away') %}💤{% elif is_state('sensor.steam_76561198064843626', 'offline') %}❌{% endif %} Joe {% if is_state('sensor.steam_76561198038995888', 'online') %}✔️{% elif is_state('sensor.steam_76561198038995888', 'away') %}💤{% elif is_state('sensor.steam_76561198038995888', 'offline') %}❌{% endif %} Mike {% if is_state('sensor.steam_76561198146483595', 'online') %}✓{% elif is_state('sensor.steam_76561198146483595', 'away') %}💤{% elif is_state('sensor.steam_76561198146483595', 'offline') %}❌{% endif %} Fred {% if is_state('sensor.steam_76561198008848460', 'online') %}✓{% elif is_state('sensor.steam_76561198008848460', 'away') %}💤{% elif is_state('sensor.steam_76561198008848460', 'offline') %}❌{% endif %}&id=1&icon=https://lh3.googleusercontent.com/proxy/vanmUA0xIVp6eCmxAw8i5Y1TSByTssRsFVxoNfOohrJuVvWTWfJwDMjgDmgbDjjgutIiz2jCs5xkAu2B7z1d3tKlITwsX2NULBOrmBuqp9IGLqCofhw4EiZ914b2R2_RurxcmF4enw&persistent=1&dismissontouch=1&subtext={{ now().strftime('%A %H:%M') }}
+    #Alexs Phone
+  - platform: rest
+    scan_interval: 300
+    name: Steam status notifications endpoint
+    resource_template: https://autoremotejoaomgcd.appspot.com/sendnotification?key=cuOw2ufm14Y:APA91bFWFka3whlG7Gp6a4tSO-RnlNsBdTs3WsAraTYBkS5m4Pu7j-8ufztBs5iEJ5GOTWjA-oy-wxJoz2wNL0ukS2cLrhfQtEN7Lu7zQ8aToCej_5BSlzEtVhZnNVkJorBhqWBV6ae5&title=Online status&text=Joe {% if is_state('sensor.steam_76561198038995888', 'online') %}✔️{% elif is_state('sensor.steam_76561198038995888', 'away') %}💤{% elif is_state('sensor.steam_76561198038995888', 'offline') %}❌{% endif %} Ben {% if is_state('sensor.steam_76561198042006295', 'online') %}✔️{% elif is_state('sensor.steam_76561198042006295', 'away') %}💤{% elif is_state('sensor.steam_76561198042006295', 'offline') %}❌{% endif %} Mike {% if is_state('sensor.steam_76561198146483595', 'online') %}✔️{% elif is_state('sensor.steam_76561198146483595', 'away') %}💤{% elif is_state('sensor.steam_76561198146483595', 'offline') %}❌{% endif %} Fred {% if is_state('sensor.steam_76561198008848460', 'online') %}✔️{% elif is_state('sensor.steam_76561198008848460', 'away') %}💤{% elif is_state('sensor.steam_76561198008848460', 'offline') %}❌{% endif %}&id=1&icon=https://lh3.googleusercontent.com/proxy/vanmUA0xIVp6eCmxAw8i5Y1TSByTssRsFVxoNfOohrJuVvWTWfJwDMjgDmgbDjjgutIiz2jCs5xkAu2B7z1d3tKlITwsX2NULBOrmBuqp9IGLqCofhw4EiZ914b2R2_RurxcmF4enw&persistent=1&dismissontouch=1&subtext={{ now().strftime('%A %H:%M') }}
+
+############## Include zoneminder events
+  - platform: zoneminder
+    include_archived: false
+    monitored_conditions: week
+
+
+############## Service status'
+  - platform: command_line
+    name: 'Radarr Online'
+    command: response=$(curl -LIk -m 3 http://192.168.1.111:7878/ -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline" 
+    scan_interval: 90
+    value_template: '{{ value }}' 
+  - platform: command_line
+    name: 'Sonarr Online'
+    command: response=$(curl -LIk -m 3 http://192.168.1.111:8989/ -o /dev/null -w "%{http_code}\n" -s); test "$response" -ge 200 && echo "Online" || echo "Offline" 
+    scan_interval: 90
+    value_template: '{{ value }}' 
+    
 ################ OLD SENSORS TO DETECT BUS TIMING ################
 #   - platform: rest
 #     resource: https://www.trentbarton.co.uk/RTILiveTimings.aspx?m=GetRtiFull&stop=4202

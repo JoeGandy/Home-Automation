@@ -1,0 +1,6 @@
+    sensor.radarr_online:
+      entity_picture: /local/assets/binhex-arch-radarr-latest-icon.png
+      friendly_name: Radarr
+    sensor.sonarr_online:
+      entity_picture: /local/assets/binhex-arch-sonarr-latest-icon.png
+      friendly_name: Sonarr

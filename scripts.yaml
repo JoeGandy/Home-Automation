@@ -71,20 +71,20 @@ turn_off_bedroom_tv:
   alias: Turn off Bedroom tv
   sequence:
   - condition: template
-    value_template: '{{ states("media_player.bedroom_tv") != "unavailable" }}'
+    value_template: '{{ states("media_player.bedroom_tv_2") != "off" }}'
   - data:
       command: power
-      device: television
+      device: new_television
     entity_id: remote.broadlink
     service: remote.send_command
 turn_on_bedroom_tv:
   alias: Turn  on bedroom TV
   sequence:
   - condition: template
-    value_template: '{{ states("media_player.bedroom_tv") == "unavailable" }}'
+    value_template: '{{ states("media_player.bedroom_tv_2") == "off" }}'
   - data:
       command: power
-      device: television
+      device: new_television
     entity_id: remote.broadlink
     service: remote.send_command
 reset_volume_on_bedroom_tv:
@@ -149,3 +149,23 @@ activate_day_mode:
   alias: Restart Home Assistant
   sequence:
   - service: homeassistant.restart
+'1599139463831':
+  alias: Show cctv on bedroom tv
+  sequence:
+  - data:
+      message: Motion has been detected, swapping to cctv for 30 seconds
+    service: notify.bedroom_tv
+  - entity_id: media_player.bedroom_tv_2
+    service: media_player.media_pause
+  - data:
+      command: am start -a android.intent.action.VIEW -d http://192.168.1.111:8765/
+    entity_id: media_player.bedroom_tv_2
+    service: androidtv.adb_command
+  - delay: '25'
+  - data:
+      command: BACK
+    entity_id: media_player.bedroom_tv_2
+    service: androidtv.adb_command
+  - delay: '1'
+  - entity_id: media_player.bedroom_tv_2
+    service: media_player.media_play

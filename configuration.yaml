@@ -1,15 +1,21 @@
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
 
+# trentbarton_buses:
+#   stop: 688
+  
 http:
   base_url: !secret full_base_url
 
 homeassistant:
+  customize: !include customize.yaml
   whitelist_external_dirs:
     - /config/recordings
     - /tmp
     - /config/www/recordings/front
     - /config/www/recordings/back
+    - /config/assets
+    - /captures
 
 # Text to speech
 tts:
@@ -26,33 +32,32 @@ octoprint:
   host: !secret octoprint_ip
   api_key: !secret octoprint_api_key
   bed: true
+  number_of_tools: 1
+  sensors:
+    monitored_conditions:
+      - 'Current State'
+      - 'Temperatures'
+      - 'Job Percentage'
+      - 'Time Elapsed'
+      - 'Time Remaining'
 
 media_player:
+  - platform: plex
+  - platform: androidtv
+    name: Bedroom TV
+    host: !secret bedroom_tv_ip
   - platform: androidtv
     name: Living Room TV
-    device_class: androidtv
-    host: !secret living_room_tv_ip
-    apps:
-      com.plexapp.android: "plexapp"
-      com.amazon.tv.launcher: "firetv"
-    state_detection_rules:
-      'com.amazon.tv.launcher':
-        - 'standby'
-      'com.plexapp.android':
-        - 'paused':
-            'media_session_state': 3
-            'wake_lock_size': 1
-        - 'playing':
-            'media_session_state': 3
-        - 'standby'
-    turn_on_command: "input keyevent 3"
-    turn_off_command: "input keyevent 223"
-  - platform: plex
-  
+    host: !secret livingroom_tv_ip
+
 google:
   client_id: !secret google_client_id_cal
   client_secret: !secret google_secret_cal
-  
+
+# calendar:
+#   - platform: caldav
+#     url: !secret private_calander_tv_shows
+
 plex:
   host: !secret plex_ip
   port: 32400
@@ -63,8 +68,14 @@ plex:
     use_episode_art: true
     show_all_controls: false
 
+nzbget:
+  host: !secret nzbget_ip
+  username: !secret nzbget_user
+  password: !secret nzbget_pass
+
 frontend:
   javascript_version: latest
+  themes: !include_dir_merge_named themes
 
 stream:
 
@@ -76,15 +87,7 @@ zoneminder:
   verify_ssl: false
 
 camera:
-  - platform: mjpeg
-    name: OctoPrint
-    mjpeg_url: !secret octoprint_camera_url
-  - platform: ffmpeg
-    name: Front of House
-    input: !secret front_of_house_camera_url
-  - platform: ffmpeg
-    name: Back of House
-    input: !secret back_of_house_camera_url
+  - platform: zoneminder
 
 folder_watcher:
   - folder: /config/www/recordings/front
@@ -115,6 +118,9 @@ notify:
   - name: notify_joe_and_sophie
     platform: telegram
     chat_id: -250415414
+  - platform: nfandroidtv
+    name: Bedroom Tv
+    host: 192.168.1.110
 
 sonoff:
   username: !secret sonoff_username
@@ -146,17 +152,14 @@ zone:
 
 panel_iframe:
   router:
-    title: 'Router'
-    url: !secret router_url
-  recordings:
-    title: 'Recordings'
-    url: !secret recordings_url
-  configure:
-    title: 'Configure'
-    url: !secret configure_url
+    title: 'Dashboard'
+    url: !secret dashboard_url
 
+light: !include lights.yaml
+input_text: !include input_text.yaml
 input_datetime: !include input_datetimes.yaml
 input_boolean: !include input_booleans.yaml
+input_number: !include input_numbers.yaml
 sensor: !include sensors.yaml
 group: !include groups.yaml
 automation: !include automations.yaml

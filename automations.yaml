@@ -166,7 +166,7 @@
       entity_id: input_boolean.sophie_occupancy
       state: 'off'
   action:
-  - entity_id: light.all
+  - entity_id: light.all_lights
     service: light.turn_off
 - id: '1581004676592'
   alias: Auto - Morning Rain Notice
@@ -206,3 +206,43 @@
   condition: []
   action:
   - service: script.turn_on_bedroom_tv
+- id: '1584195626709'
+  alias: Bedroom Button Single Click
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ state_attr(''sensor.0x00158d0003cfd6ad_click'', ''click'')
+      == ''single''  }}'
+  condition: []
+  action:
+  - entity_id: media_player.bedroom_tv
+    service: media_player.media_play_pause
+  - condition: template
+    value_template: '{{ states("media_player.bedroom_tv") == "unavailable" }}'
+  - service: script.turn_on_bedroom_tv
+- id: '1584197796660'
+  alias: Activate Night mode via double click
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ state_attr(''sensor.0x00158d0003cfd6ad_click'', ''click'')
+      == ''double''  }}'
+  condition:
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'off'
+  action:
+  - service: script.bed_time
+- id: '1584197891145'
+  alias: Activate Day mode via double click
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ state_attr(''sensor.0x00158d0003cfd6ad_click'', ''click'')
+      == ''double''  }}'
+  condition:
+  - condition: state
+    entity_id: input_boolean.night_mode
+    state: 'on'
+  action:
+  - service: script.morning_routine
