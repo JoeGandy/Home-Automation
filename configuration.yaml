@@ -68,6 +68,13 @@ frontend:
 
 stream:
 
+
+zoneminder:
+  host: !secret zoneminder_ip
+  path: /zm/
+  ssl: true
+  verify_ssl: false
+
 camera:
   - platform: mjpeg
     name: OctoPrint
