@@ -94,12 +94,12 @@
 
 ################ Script to pull latest recordings off webcams 
   - platform: command_line
-    command: find /config/www/recordings/front/*.mp4 -maxdepth 1 -mmin +1 -print0|xargs -0 ls -t | head -n 1 | sed 's/.*\///'
+    command: find /config/www/recordings/front/*.mp4 -maxdepth 1 -mmin +1 -print | sort -n -r | head -n 1 | xargs basename
     name: front_latest_recording
-    scan_interval: 20
-    command_timeout: 15
+    scan_interval: 15
+    command_timeout: 10
   - platform: command_line
-    command: find /config/www/recordings/back/*.mp4 -maxdepth 1 -mmin +1 -print0|xargs -0 ls -t | head -n 1 | sed 's/.*\///'
+    command: find /config/www/recordings/back/*.mp4 -maxdepth 1 -mmin +1 -print | sort -n -r | head -n 1 | xargs basename
     name: back_latest_recording
     scan_interval: 15
     command_timeout: 10
