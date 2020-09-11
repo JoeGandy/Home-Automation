@@ -17,3 +17,8 @@
     name: Night Mode
     initial: off
     icon: mdi:weather-night
+
+################ Alarm toggle
+  alarm_enabled:
+    name: Enable Morning Alarm
+    icon: mdi:alarm
